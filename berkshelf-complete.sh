@@ -33,13 +33,10 @@ _berkshelf_commands() {
 
 _berkshelf_cookbooks() {
   local file=${BERKSHELF_BERKSFILE:-Berksfile}
-  if [ -e $file ]; then
-    # strip all quotes from cookbook name and remove trailing comma, if any
-    grep -w '^cookbook' $file \
-      | awk '{ print $2 }' \
-      | sed 's/"//g' \
-      | sed "s/'//g" \
-      | sed 's/,$//'
+  local lock_file="${file}.lock"
+  if [ -e $lock_file ]; then
+    # trying to detect cookbook names from lock file using format '<cookbook_name> (x.y.z)'
+    grep -o -e '[^ ]\+ ([0-9]\+\.[0-9]\+\.[0-9]\+)' $lock_file | sed 's/\([^ ]\+\) .*$/\1/'
   fi
 }
 
