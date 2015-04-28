@@ -45,16 +45,13 @@ _local_cookbooks() {
 }
 
 _berkshelf() {
-  # local curr prev commands
+  # local curr action commands
   COMPREPLY=()
   curr="${COMP_WORDS[COMP_CWORD]}"
-  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  action="${COMP_WORDS[1]}"
 
-  # List of commands to complete
-  commands=`_berkshelf_commands`
-
-  case "${prev}" in
-    "open"|"outdated"|"show"|"update"|"upload")
+  case "${action}" in
+    "info"|"open"|"outdated"|"show"|"update"|"upload"|"contingent")
       local berkshelf_cookbooks=`_berkshelf_cookbooks`
       local local_cookbooks=`_local_cookbooks`
       local cookbooks=`echo $berkshelf_cookbooks $local_cookbooks | sort -n | uniq`
@@ -62,8 +59,12 @@ _berkshelf() {
       return 0
       ;;
     *)
+      [ "$COMP_CWORD" -gt "1" ] && return 0
       ;;
   esac
+
+  # List of commands to complete
+  commands=`_berkshelf_commands`
 
   COMPREPLY=($(compgen -W "${commands}" -- ${curr}))
   return 0
