@@ -2,6 +2,9 @@ Berkshelf Bash Plugin
 =====================
 The `berkshelf-bash-plugin` is a bash plugin for [Berkshelf](https://github.com/berkshelf/berkshelf).
 
+### Status
+
+This software project is no longer under active development as it has no active maintainers. The software may continue to work for some or all use cases, but issues filed in GitHub will most likely not be triaged. If a new maintainer is interested in working on this project please come chat with us in #chef-dev on Chef Community Slack.
 
 Installation
 ------------
